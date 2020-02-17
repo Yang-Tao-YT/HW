@@ -69,9 +69,9 @@ class hw4_eigenvector:
 
         '''find the GCG with svd and pseudo inverse'''
         u , d, vt = self.svd()
-        c_inverse = np.dot(np.dot(u , np.linalg.inv(d)) , vt)
+        c_inverse = u @ np.linalg.inv(d) @ vt
         
-        gcg = np.dot(np.dot(G , c_inverse) , G.T)
+        gcg = G @ c_inverse @ G.T
         return gcg,c_inverse
     
     def portfolio(self, G,a,constant):
@@ -116,8 +116,8 @@ if __name__ == '__main__':
     returns_hat = hw4.recover_from_PC(vector)
     port_r = returns.sum(1)/100
     port_r_hat = returns_hat.sum(1)/100
-    port_r.plot(fontsize = 30 , figsize = [30,20] , label = 'portfolio' )
-    port_r_hat.plot(fontsize = 30 , figsize = [30,20] , label = 'portfolio_hat' , )
+    port_r.plot(fontsize = 30 , figsize = [20,15] , label = 'portfolio' )
+    port_r_hat.plot(fontsize = 30 , figsize = [20,15] , label = 'portfolio_hat' , )
     plt.legend(fontsize = 30)
     plt.xlabel('date' , fontsize = 30)
     plt.title('daily return vs prediction from the 90% eigenvector' , fontsize = 30)
@@ -125,7 +125,7 @@ if __name__ == '__main__':
     # In[]
     '''plot the difference'''
     diff = (port_r - port_r_hat)**2
-    diff.plot(figsize = [30,20])
+    diff.plot(figsize = [20,15])
     plt.legend(fontsize = 30)
     plt.xlabel('data' , fontsize = 30)
     plt.title('daily return vs prediction from the 90% eigenvector' , fontsize = 30)
