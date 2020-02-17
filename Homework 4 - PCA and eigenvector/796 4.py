@@ -116,26 +116,26 @@ if __name__ == '__main__':
     returns_hat = hw4.recover_from_PC(vector)
     port_r = returns.sum(1)/100
     port_r_hat = returns_hat.sum(1)/100
-    port_r.plot(fontsize = 30 , figsize = [20,15] , label = 'portfolio' )
-    port_r_hat.plot(fontsize = 30 , figsize = [20,15] , label = 'portfolio_hat' , )
-    plt.legend(fontsize = 30)
-    plt.xlabel('date' , fontsize = 30)
-    plt.title('daily return vs prediction from the 90% eigenvector' , fontsize = 30)
+    port_r.plot(fontsize = 20 , figsize = [20,15] , label = 'portfolio' )
+    port_r_hat.plot(fontsize = 20 , figsize = [20,15] , label = 'portfolio_hat' , )
+    plt.legend(fontsize = 20)
+    plt.xlabel('date' , fontsize = 20)
+    plt.title('daily return vs prediction from the 90% eigenvector' , fontsize = 20)
     plt.show()
     # In[]
     '''plot the difference'''
     diff = (port_r - port_r_hat)**2
     diff.plot(figsize = [20,15])
-    plt.legend(fontsize = 30)
-    plt.xlabel('data' , fontsize = 30)
-    plt.title('daily return vs prediction from the 90% eigenvector' , fontsize = 30)
+    plt.legend(fontsize = 20)
+    plt.xlabel('Date' , fontsize = 20)
+    plt.title('Daily return vs prediction from the 90% eigenvector' , fontsize = 20)
     plt.show()
     # In[]
     '''plot the best portfolio'''
     price = hw4.df.sum(1)/100
     price_port = hw4.df @ weight
-    price.plot(label = 'marekt' , fontsize = 20)
-    price_port.plot(label = 'portfolio' , fontsize = 20)
-    plt.xlabel('date', fontsize = 30)
-    plt.title('market vs portfolio' , fontsize = 30)
+    price.plot(label = 'marekt' ,  figsize = [20,15] , fontsize = 20)
+    price_port.plot(label = 'portfolio' , figsize = [20,15] ,  fontsize = 20)
+    plt.xlabel('Date', fontsize = 20)
+    plt.title('market vs portfolio' , fontsize = 20)
     plt.legend()
