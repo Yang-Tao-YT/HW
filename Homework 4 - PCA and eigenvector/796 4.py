@@ -32,6 +32,7 @@ class hw4_eigenvector:
         return log_return.dropna()
     
     def covariance_matrix(self):
+        '''find the loading'''
         log_return = self.log_return()
         cm = log_return.cov()
         return cm
@@ -49,7 +50,12 @@ class hw4_eigenvector:
         member = {count[i] : dic[count[i]] for i in range(len(count))}
         return  member 
     
-    
+    def recover_from_PC (self, vector):
+        '''recover the df from eigenvector'''
+        returns = self.log_return()
+        PC = returns @ vector
+        re_hat = PC @ vector.T
+        return re_hat
     #----------------------------question2------------------------
     def svd (self):
         '''Singular Value Decomposition'''
@@ -69,13 +75,14 @@ class hw4_eigenvector:
         return gcg,c_inverse
     
     def portfolio(self, G,a,constant):
+        '''find the weight of best portfolio'''
         cons = np.array([1,0.1])
         gcg, c_inverse = self.GCG(G)
         gcg_inverse = np.linalg.inv(gcg)
         mean = self.log_return().mean()
         lamda =gcg_inverse @ (G @ c_inverse @ mean - 2 * a * cons)
         weight  = 1 /(2 * a) * c_inverse @ (mean - G.T @ lamda)
-        return weight,c_inverse
+        return weight
 # In[]
 if __name__ == '__main__':
     #tick = pd.read_csv('C:/Users/Zackt/Documents/1233.csv')
@@ -85,13 +92,12 @@ if __name__ == '__main__':
     # In[]
     hw4 = hw4_eigenvector(df, '5y'  ,'df')
     hw4._clean()
-     
-    
     returns = hw4.log_return()
     cov = hw4.covariance_matrix()
     # In[]
     value , vector =  np.linalg.eig(cov)
     # In[]
+    '''find the eigenvector that cover for 90%'''
     member = hw4.find_cover(0.9)
     # In[]
     G = np.ones([2,100])
@@ -101,13 +107,35 @@ if __name__ == '__main__':
     gcg = hw4.GCG(G)
     # In[]
     constant = np.array([1,0.1])
-    a , d = hw4.portfolio(G,10,constant)
+    weight = hw4.portfolio(G,30,constant)
     # In[]
-    '''plot the first PC '''
-    df = hw4.df
-    p = df.sum(1)/100
-    w = list(member.values())[0]  
-    aaaa = df @ (w / sum(w) )
-    aaaa.plot(label = 'first')
-    p.plot(label = 'sp500')
+    '''plot the prediction '''
+
+    vector = list(member.values())
+    vector = np.matrix(vector).T
+    returns_hat = hw4.recover_from_PC(vector)
+    port_r = returns.sum(1)/100
+    port_r_hat = returns_hat.sum(1)/100
+    port_r.plot(fontsize = 30 , figsize = [30,20] , label = 'portfolio' )
+    port_r_hat.plot(fontsize = 30 , figsize = [30,20] , label = 'portfolio_hat' , )
+    plt.legend(fontsize = 30)
+    plt.xlabel('date' , fontsize = 30)
+    plt.title('daily return vs prediction from the 90% eigenvector' , fontsize = 30)
+    plt.show()
+    # In[]
+    '''plot the difference'''
+    diff = (port_r - port_r_hat)**2
+    diff.plot(figsize = [30,20])
+    plt.legend(fontsize = 30)
+    plt.xlabel('data' , fontsize = 30)
+    plt.title('daily return vs prediction from the 90% eigenvector' , fontsize = 30)
+    plt.show()
+    # In[]
+    '''plot the best portfolio'''
+    price = hw4.df.sum(1)/100
+    price_port = hw4.df @ weight
+    price.plot(label = 'marekt' , fontsize = 20)
+    price_port.plot(label = 'portfolio' , fontsize = 20)
+    plt.xlabel('date', fontsize = 30)
+    plt.title('market vs portfolio' , fontsize = 30)
     plt.legend()
