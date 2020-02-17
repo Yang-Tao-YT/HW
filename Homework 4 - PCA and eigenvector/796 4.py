@@ -107,7 +107,7 @@ if __name__ == '__main__':
     gcg = hw4.GCG(G)
     # In[]
     constant = np.array([1,0.1])
-    weight = hw4.portfolio(G,30,constant)
+    weight = hw4.portfolio(G,20,constant)
     # In[]
     '''plot the prediction '''
 
@@ -125,7 +125,7 @@ if __name__ == '__main__':
     # In[]
     '''plot the difference'''
     diff = (port_r - port_r_hat)**2
-    diff.plot(figsize = [20,15])
+    diff.plot(figsize = [20,15] , fontsize = 20 , label = 'difference between predict and return')
     plt.legend(fontsize = 20)
     plt.xlabel('Date' , fontsize = 20)
     plt.title('Daily return vs prediction from the 90% eigenvector' , fontsize = 20)
@@ -139,3 +139,5 @@ if __name__ == '__main__':
     plt.xlabel('Date', fontsize = 20)
     plt.title('market vs portfolio' , fontsize = 20)
     plt.legend()
+    # In[]
+  
