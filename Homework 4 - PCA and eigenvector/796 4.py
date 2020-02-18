@@ -51,9 +51,9 @@ class hw4_eigenvector:
         return  member 
     
     def recover_from_PC (self, vector):
-        '''recover the df from eigenvector'''
+        '''recover the daily reutrn from eigenvector'''
         returns = self.log_return()
-        PC = returns @ vector
+        PC = returns @ vector #calculate the principle component 
         re_hat = PC @ vector.T
         return re_hat
     #----------------------------question2------------------------
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     value , vector =  np.linalg.eig(cov)
     # In[]
     '''find the eigenvector that cover for 90%'''
-    member = hw4.find_cover(0.9)
+    member = hw4.find_cover(0.9) 
     # In[]
     G = np.ones([2,100])
     G[1,17:] = 0
@@ -139,5 +139,3 @@ if __name__ == '__main__':
     plt.xlabel('Date', fontsize = 20)
     plt.title('market vs portfolio' , fontsize = 20)
     plt.legend()
-    # In[]
-  
