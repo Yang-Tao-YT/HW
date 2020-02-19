@@ -12,6 +12,8 @@ i use the package numpy.linagle.eig to generate the eigenvector from the covaria
 
 ## 4
 Using eigenvalue/sum(eigenvalue) as the weight, for my dataset, I need first 8 eigenvector to cover 50% information of the market and 55 eigenvectors to cover 90%.
+Usually, most stocks involve the market risk factor. Thus, no wonder the first principle component, which is the market portfolio contribute the most to variance. Moreover, combine with other common risk factors, they will cover the most of variance of all the stocks.
+
 ![1](https://github.com/Yang-Tao-YT/HW/raw/master/Homework%204%20-%20PCA%20and%20eigenvector/pic/1.png)
 ## 5
 After plotting the residual return stream from difference of 90% eigenvector dataset and original dataset, we can notice that the difference is every minimal. 
