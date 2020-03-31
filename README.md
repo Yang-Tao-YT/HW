@@ -1,2 +1,2 @@
-# Homework for the Class - Computational methond of Finance
+# Homeworks for multiple classes
 > Mostly based on python and R
